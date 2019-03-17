@@ -1,71 +1,63 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, View, Image } from 'react-native';
+import { TouchableOpacity, Button, StyleSheet, Text, View, Image } from 'react-native';
 
-export default class GameBoard extends Component {
+//import Header from './Header'
+import GameBoard from './GameBoard'
+
+export default class App extends Component {
+  state: {
+    gameStarted: boolean
+  };
+
+  constructor() {
+    super()
+    this.state={gameStarted: false}
+  }
+
+  startGame() {
+    this.state={gameStarted: true}
+  }
 
   render() {
+    const {gameStarted} = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.board}>
-          <View
-            style={styles.line}
-          />
-          <View
-            style={[styles.line, {
-              transform: [
-                { translateX: 200 }
-              ]
-            }]}
-          />
-          <View
-            style={[styles.line, {
-              height: 3,
-              width: 309,
-              transform: [
-                { translateY: 100 }
-              ]
-            }]}
-          />
-          <View
-            style={[styles.line, {
-              height: 3,
-              width: 309,
-              transform: [
-                { translateY: 200 }
-              ]
-            }]}
-          />
-        </View>
+        <Header />
+        {
+          gameStarted ? (
+            <GameBoard />
+          ) : (
+            <View>
+              <Text style={styles.welcome}>
+                Welcome to the game!
+              </Text>
+              <TouchableOpacity onPress={() => this.startGame()}>
+                <Text style={styles.instructions}>
+                  Touch here to start
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )
+        }
       </View>
-
-
-
-
-
-    );
+    )
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 100,
+    flex: 1,
+    backgroundColor: '#F5FCFF',
   },
-  board: {
-    borderWidth: 3,
-    height: 312,
-    width: 312,
+  welcome: {
+    fontSize: 20,
+    marginTop: 50,
   },
-  line: {
-    backgroundColor: '#000',
-    height: 309, //312-2*3
-    width: 3,
-    position: 'absolute',
-    transform: [
-      { translateX: 100 }
-    ]
+  instructions: {
+    textAlign: 'center',
+    marginTop: 20,
+    color: 'grey',
+    marginBottom: 5,
   },
-
-});
+})
