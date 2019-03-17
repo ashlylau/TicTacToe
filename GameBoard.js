@@ -73,20 +73,81 @@ export default class GameBoard extends Component {
   }
 
   AIAction() {
-    const {userInputs, AIInputs, result} = this.state
+    const {userInputs, AIInputs, result, round} = this.state
     if (result !== -1) {
       return
     }
+
+    /* implement heuristic function (attack):
+        X | X | *
+        ---------
+        O |   | X
+        ---------
+        O | O |
+
+        AI (X) will select position * to win */
+    var almostWinAI = this.containsAlmostWin(AIInputs);
+    if (almostWinAI[0]) {
+      this.setState({ AIInputs: AIInputs.concat(almostWinAI[1]) })
+      this.judgeWinner()
+      console.log('shouldWin')
+      return
+    }
+
+    /* implement heuristic function (defense):
+        X |   |
+        ---------
+        O |   | X
+        ---------
+        O | O | *
+
+        AI (X) will select position * to prevent human from winning */
+    var almostWinUser = this.containsAlmostWin(userInputs);
+    if (almostWinUser[0]) {
+      this.setState({ AIInputs: AIInputs.concat(almostWinUser[1]) })
+      this.judgeWinner()
+      console.log('blockedAlmostWinUser')
+      return
+    }
+
     while (true) {
       const inputs = userInputs.concat(AIInputs)
 
       const randomNumber = Math.round(Math.random() * 8.3)
-      if (inputs.every(d => d !== randomNumber)) {
+      if (inputs.every(d => d !== randomNumber)) { //if curr inputs != selected area
         this.setState({ AIInputs: AIInputs.concat(randomNumber) })
         this.judgeWinner()
         break
       }
     }
+  }
+
+  //returns [boolean, value]
+  containsAlmostWin(inputs: number[]) {
+    const {userInputs, AIInputs} = this.state
+    var allInputs = userInputs.concat(AIInputs)
+
+    for (var i = 0; i < CONDITIONS.length; i++) {
+      var result = this.containsTwo(inputs, CONDITIONS[i]);
+      if (result != 10 && allInputs.every(d => d !== result)) {
+        return [true, result];
+      }
+    }
+    return [false, 10];
+  }
+
+  //returns required position to win an almost win
+  containsTwo(inputs: number[], condition: number[]) {
+    if (inputs.includes(condition[0]) && inputs.includes(condition[1])) {
+      return condition[2];
+    }
+    if (inputs.includes(condition[1]) && inputs.includes(condition[2])) {
+      return condition[0];
+    }
+    if (inputs.includes(condition[0]) && inputs.includes(condition[2])) {
+      return condition[1];
+    }
+    return 10;
   }
 
   componentDidMount() {
