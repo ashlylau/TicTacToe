@@ -1,7 +1,9 @@
 # TicTacToe
 Learning basics of React Native by following this tutorial: https://medium.com/@davidguandev/building-a-tic-tac-toe-in-react-native-2a3c44e697f2
 
-### Heuristics (attack)
+### Implemented additional heuristics for AI
+
+#### Heuristics (attack)
         X | X | *
         ---------
         O |   | X
@@ -18,7 +20,7 @@ Learning basics of React Native by following this tutorial: https://medium.com/@
     }
 
 
-### Heuristics (defense)
+#### Heuristics (defense)
         X |   |
         ---------
         O |   | X
