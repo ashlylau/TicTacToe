@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
-import { TouchableOpacity, Button, StyleSheet, Text, View, Image } from 'react-native';
+import React, { Component } from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from 'react-native'
 
-//import Header from './Header'
+import Header from './Header'
 import GameBoard from './GameBoard'
 
 export default class App extends Component {
@@ -11,15 +16,15 @@ export default class App extends Component {
 
   constructor() {
     super()
-    this.state={gameStarted: false}
+    this.state={ gameStarted: false }
   }
 
   startGame() {
-    this.state={gameStarted: true}
+    this.setState({ gameStarted: true })
   }
 
   render() {
-    const {gameStarted} = this.state
+    const { gameStarted } = this.state
     return (
       <View style={styles.container}>
         <Header />
