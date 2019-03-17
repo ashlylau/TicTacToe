@@ -89,7 +89,7 @@ export default class GameBoard extends Component {
     }
   }
 
-  componenetDidMount() {
+  componentDidMount() {
     this.restart()
   }
 

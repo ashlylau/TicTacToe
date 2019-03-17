@@ -22,7 +22,7 @@ export const AREAS = [
   { startX: 209, startY: 209, endX : 309, endY: 309, id: 8 },
 ]
 
-export const CONDITIONS = [
+export const CONDITIONS = [ //conditions for a win
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
